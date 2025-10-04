@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 def home(request):
     """Первый контроллер обработки страницы home.html"""
-    return render(request, 'home.html')
+    return render(request, "home.html")
 
 
 def contacts(request):
@@ -13,17 +13,21 @@ def contacts(request):
     print("Начало работы контроллера")
 
     # Условие обработки POST запроса
-    if request.method == 'POST':
+    if request.method == "POST":
         print("Начало работы POST запроса")
 
-        name = request.POST.get('name')
-        message = request.POST.get('message')
+        name = request.POST.get("name")
+        message = request.POST.get("message")
         print(f"Имя: {name}, сообщение: {message}")
 
-        return render(request, 'contacts.html', {'success_message': f"Спасибо, {name}, сообщение получено:"})
+        return render(
+            request,
+            "contacts.html",
+            {"success_message": f"Спасибо, {name}, сообщение получено:"},
+        )
 
     # Условие обработки GET запроса
-    if request.method == 'GET':
+    if request.method == "GET":
         print("Начало работы GET запроса")
 
-        return render(request, 'contacts.html')
+        return render(request, "contacts.html")
