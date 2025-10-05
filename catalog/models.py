@@ -62,3 +62,29 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name_product", "unit_price_product", "created_at", "updated_at"]
+
+
+class Contact(models.Model):
+    """Модель контактов"""
+
+    # Поля модели
+    name_country = models.CharField(
+        max_length=100, verbose_name="Контакт", help_text="Страна"
+    )
+    inn_company = models.TextField(
+        verbose_name="Описание", help_text="Инн компании"
+    )
+
+    adr_contact = models.TextField(
+        verbose_name="Номер", help_text="Адрес компании и телефон"
+    )
+
+    def __str__(self):
+        return self.name_country
+
+    class Meta:
+        verbose_name = "Контакт"
+        verbose_name_plural = "Контакты"
+        ordering = [
+            "name_country",
+        ]
