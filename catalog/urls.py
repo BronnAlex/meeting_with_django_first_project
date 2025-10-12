@@ -1,22 +1,21 @@
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.urls import path
-from catalog.apps import CatalogConfig
 from catalog.views import (
     home,
     contacts,
-)  # get_contact  # импорт функций это наши контроллеры
+    product_details,
+)
 
-app_name = (
-    CatalogConfig.name
-)  # Это и будет наше имя приложения, оно зафиксировано при создании в классе CatalogConfig
+app_name = "catalog"
 
 urlpatterns = [
-    # Путь admin/ из config/urls.py чтобы сразу отображалась страница каталог
-    path("", home, name=app_name),
-    # чтобы отображалась страница каталог при нажатии на кнопку каталог со страницы контактов,
-    # а также на самой странице каталога также добавил это в html шаблоне
-    path("home/", home, name=app_name),
-    # Путь чтобы отображалась страница контактов при переходе с каталога,
-    # также добавил это в html шаблоне и обработка POST и GET запросов
-    path("contacts/", contacts, name=app_name),
-    # переменную name можно называть как угодно для идентификации маршрута. И чтобы команде было понятно
+    path("", home, name="home"),
+    path("contacts/", contacts, name="contacts"),
+    path("product_details/<int:pk>/", product_details, name="product_details"),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
