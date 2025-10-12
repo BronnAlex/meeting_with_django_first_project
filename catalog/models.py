@@ -71,9 +71,7 @@ class Contact(models.Model):
     name_country = models.CharField(
         max_length=100, verbose_name="Контакт", help_text="Страна"
     )
-    inn_company = models.TextField(
-        verbose_name="Описание", help_text="Инн компании"
-    )
+    inn_company = models.TextField(verbose_name="Описание", help_text="Инн компании")
 
     adr_contact = models.TextField(
         verbose_name="Номер", help_text="Адрес компании и телефон"
