@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
 
@@ -8,17 +8,17 @@
                 <div class="col">
                     <div class="card shadow-sm">
 
-                        <img src="{{ product.photo_product | media_filter }}">
+                        <img src="{{ object.photo_product | media_filter }}">
                         <div class="card-body">
-                            <p class="card-text">{{ product.name_product}}</p>
-                            <p class="card-text">{{ product.description_product|truncatechars:100}}</p>
-                            <p class="card-text">Категория товара: {{ product.category_product | default:'Нужный товар'}}</p>
-                            <p class="card-text">Дата создания: {{ product.created_at | date:"d M Y"}}</p>
-                            <p class="card-text">Цена товара: {{ product.unit_price_product }}</p>
+                            <p class="card-text">{{ object.name_product}}</p>
+                            <p class="card-text">{{ object.description_product|truncatechars:100}}</p>
+                            <p class="card-text">Категория товара: {{ object.category_product | default:'Нужный товар'}}</p>
+                            <p class="card-text">Дата создания: {{ object.created_at | date:"d M Y"}}</p>
+                            <p class="card-text">Цена товара: {{ object.unit_price_product }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary"
-                                       href="{% url 'catalog:home' %}"
+                                       href="{% url 'catalog:product_list' %}"
                                        role="button">Назад</a>
                                 </div>
                                 <small class="text-body-secondary">9 mins</small></div>

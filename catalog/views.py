@@ -1,55 +1,36 @@
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, TemplateView
 from catalog.models import Product, Contact
 
 
-def home(request):
-    """Первый контроллер обработки страницы home.html"""
-    products = (
-        Product.objects.all()
-    )  # Получаем все продукты из базы данных в порядке убывания по дате
-    context = {"products": products}  # Создаем словарь с данными
+class CatalogListView(ListView):
+    model = Product
 
-    return render(request, "home.html", context)
+    # app_name/model_action - поиск шаблона по умолчанию
+    # catalog/product_list.html
+    # Ранее мы записывали QuerySet в context, теперь он создается по умолчаию как object_action(object_list)
 
 
-def contacts(request):
-    """Второй контроллер обработки страницы contacts.html,
-    а также post  и get запросов"""
+class CatalogTemplateView(TemplateView):
+    template_name = "catalog/contacts.html"
 
-    print("Начало работы контроллера")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            company_info = Contact.objects.first()  # Получите первую запись из модели
+            context["company_name"] = company_info.name_country
+            context["inn_company"] = company_info.inn_company
+            context["adr_contact"] = company_info.adr_contact
+        except Contact.DoesNotExist:
+            context["company_name"] = "Компания не найдена"
+            context["description"] = "Информация о компании отсутствует."
+            context["adr_contact"] = "Адрес отсутствует"
 
-    # Условие обработки POST запроса
-    if request.method == "POST":
-        print("Начало работы POST запроса")
-
-        name = request.POST.get("name")
-        message = request.POST.get("message")
-        print(f"Имя: {name}, сообщение: {message}")
-
-        return render(
-            request,
-            "contacts.html",
-            {"success_message": f"Спасибо, {name}, сообщение получено:"},
-        )
-
-    # Условие обработки GET запроса
-    contacts_company = Contact.objects.filter(
-        name_country="Россия"
-    )  # Получаем все контакты
-    context_contact = {
-        "contacts_company": contacts_company
-    }  # Создаем словарь с контактными данными
-    print(context_contact)
-    print("Начало работы GET запроса")
-
-    return render(request, "contacts.html", context_contact)
+        return context
 
 
-def product_details(request, pk):
-    """Первый контроллер обработки страницы home.html"""
-    product = get_object_or_404(
-        Product, pk=pk
-    )  # Тоже самое что и Product.objects.get(pk=pk)
-    context = {"product": product}
+class CatalogDetailView(DetailView):
+    model = Product
 
-    return render(request, "product_details.html", context)
+    # app_name/model_action - поиск шаблона по умолчанию
+    # catalog/product_detail.html
+    # Ранее мы записывали QuerySet в context, теперь он создается по умолчанию как object_action(object_detail)
