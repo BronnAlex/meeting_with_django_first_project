@@ -13,17 +13,18 @@
                 <h3 class="mb-0">{{top_two.title}}</h3>
                 <div class="mb-1 text-body-secondary">Nov 12</div>
                 <p class="card-text mb-auto">{{ top_two.content | truncatechars:10 }}</p>
-                <a href="{% url 'my_blog:my_blog_detail' top_two.pk%}" class="icon-link gap-1 icon-link-hover stretched-link">
-                    Перейти
-                    <svg class="bi" aria-hidden="true">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                </a></div>
-            <div class="col-auto d-none d-lg-block">
-                <img src="{{ top_two.preview_image | media_filter_blog }}" style="width: 320px; height: 200px;">
+                <a class="btn btn-primary" href="{% url 'my_blog:my_blog_detail' top_two.pk%}">Перейти</a>
+                <a class="btn btn-primary" href="{% url 'my_blog:my_blog_update' top_two.pk%}">Редактировать</a>
+                <a class="btn btn-primary" href="{% url 'my_blog:my_blog_delete' top_two.pk%}">Удалить</a>
+
 
             </div>
+
+            <div class="col-auto d-none d-lg-block">
+                <img src="{{ top_two.preview_image | media_filter_blog }}" style="width: 320px; height: 200px;">
+            </div>
         </div>
+
     </div>
     {% endfor %}
 </div>

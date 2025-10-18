@@ -7,7 +7,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("catalog.urls", namespace="catalog")),  # Путь к приложению catalog
-    path("blog/", include("my_blog.urls", namespace="my_blog")),  # Путь к приложению my_blog
+    path(
+        "blogs/", include("my_blog.urls", namespace="my_blog")
+    ),  # Путь к приложению my_blog
 ]
 
 if settings.DEBUG:

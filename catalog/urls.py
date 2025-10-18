@@ -12,8 +12,9 @@ urlpatterns = [
     # path("contacts/", contacts, name="contacts"),
     path("contacts/", CatalogTemplateView.as_view(), name="contacts"),
     # path("product_details/<int:pk>/", product_details, name="product_details"),
-    path("product_detail/<int:pk>/", CatalogDetailView.as_view(), name="product_detail"),
-
+    path(
+        "product_detail/<int:pk>/", CatalogDetailView.as_view(), name="product_detail"
+    ),
 ]
 
 if settings.DEBUG:
