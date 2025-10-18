@@ -1,0 +1,36 @@
+{% extends 'my_blog/base.html' %}
+{% load my_tags_blog %}
+{% block content %}
+
+
+<div class="row mb-2">
+
+    <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+                <h3 class="mb-0">{{object.title}}</h3>
+                <div class="mb-1 text-body-secondary">Nov 12</div>
+                <p class="card-text mb-auto">{{ object.content }}</p>
+                <a href="{% url 'my_blog:my_blog_list' %}" class="icon-link gap-1 icon-link-hover stretched-link">
+                    Назад
+                    <svg class="bi" aria-hidden="true">
+                        <use xlink:href="#chevron-right"></use>
+                    </svg>
+                </a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+                <img src="{{ object.preview_image | media_filter_blog }}" style="width: 320px; height: 265px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <nav class="blog-pagination" aria-label="Pagination">
+        <a class="btn btn-outline-primary rounded-pill" href="#">Older</a>
+        <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Newer</a>
+    </nav>
+</div>
+{% endblock %}
