@@ -3,13 +3,14 @@ from django.conf.urls.static import static
 
 from django.urls import path, include
 
-from my_blog.views import  MyBlogListView, MyBlogDetailView
+from my_blog.views import  MyBlogListView, MyBlogDetailView, MyBlogCreateView
 
 app_name = "my_blog"
 
 urlpatterns = [
     path("", MyBlogListView.as_view(), name='my_blog_list'),
     path("my_blog_detail/<int:pk>/", MyBlogDetailView.as_view(), name='my_blog_detail'),
+    path("my_blog_create/create/", MyBlogCreateView.as_view(), name='my_blog_create'),
 
 ]
 

@@ -1,4 +1,5 @@
-from django.views.generic import ListView, DetailView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 from my_blog.models import BlogEntry
 
 # CRUD
@@ -22,11 +23,9 @@ class MyBlogDetailView(DetailView):
 
     # app_name/model_action - поиск шаблона по умолчанию
     # catalog/product_list.html
-
-
-# def detail(request):
-#     blog_data = BlogEntry.objects.all()
-#     context = {"blogs": blog_data}
-#     print(context)
-#     return render(request, "my_blog/base.html", context)
+class MyBlogCreateView(CreateView):
+    model = BlogEntry
+    fields = ('title', 'content', 'preview_image', 'is_active', 'count_views')
+    template_name = 'my_blog/blogentry_form.html'
+    success_url = reverse_lazy('my_blog:my_blog_list')
 

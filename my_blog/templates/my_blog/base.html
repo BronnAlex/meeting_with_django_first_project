@@ -114,7 +114,8 @@
         <div class="col-lg-6 px-0"><h1 class="display-4 fst-italic">Блог фруктов и овощей</h1>
             <p class="lead my-3">Здесь вы можете посмотреть, где точно выращены наши продукты. их пищевую ценность,
                 а также пользу для организма</p>
-            <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold"></a></p></div>
+            <p class="lead mb-0"><a href="{% url 'my_blog:my_blog_create' %}" class="text-body-emphasis fw-bold"> Добавить пост</a></p>
+        </div>
 
 
         {% block content %}
