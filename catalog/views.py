@@ -1,38 +1,39 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 from catalog.forms import ProductForm
-from catalog.models import Product, Contact
+from catalog.models import Contact, Product
 
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'catalog/product_list.html'
+    template_name = "catalog/product_list.html"
 
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'catalog/product_detail.html'
+    template_name = "catalog/product_detail.html"
 
 
 class ProductCreateView(CreateView):
     model = Product
-    template_name = 'catalog/product_form.html'
+    template_name = "catalog/product_form.html"
     form_class = ProductForm
-    success_url = reverse_lazy('catalog:product_list')
+    success_url = reverse_lazy("catalog:product_list")
 
 
 class ProductUpdateView(UpdateView):
     model = Product
-    template_name = 'catalog/product_form.html'
+    template_name = "catalog/product_form.html"
     form_class = ProductForm
-    success_url = reverse_lazy('catalog:product_list')
+    success_url = reverse_lazy("catalog:product_list")
 
 
 class ProductDeleteView(DeleteView):
     model = Product
-    template_name = 'catalog/product_confirm_delete.html'
-    success_url = reverse_lazy('catalog:product_list')
+    template_name = "catalog/product_confirm_delete.html"
+    success_url = reverse_lazy("catalog:product_list")
 
 
 class ContactTemplateView(TemplateView):

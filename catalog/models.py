@@ -49,7 +49,10 @@ class Product(models.Model):
         blank=True,
         related_name="products",
     )
-    unit_price_product = models.IntegerField(help_text="Цена за покупку")
+    unit_price_product = models.IntegerField(
+        verbose_name="Цена за один товар", help_text="Цена за покупку"
+    )
+
     created_at = models.DateField(
         verbose_name="Дата создания", help_text="Введите дату создания продукта"
     )
