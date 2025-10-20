@@ -1,16 +1,42 @@
-from django.views.generic import ListView, DetailView, TemplateView
-from catalog.models import Product, Contact
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from catalog.forms import ProductForm
+from catalog.models import Contact, Product
 
 
-class CatalogListView(ListView):
+class ProductListView(ListView):
     model = Product
-
-    # app_name/model_action - поиск шаблона по умолчанию
-    # catalog/product_list.html
-    # Ранее мы записывали QuerySet в context, теперь он создается по умолчаию как object_action(object_list)
+    template_name = "catalog/product_list.html"
 
 
-class CatalogTemplateView(TemplateView):
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "catalog/product_detail.html"
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    template_name = "catalog/product_form.html"
+    form_class = ProductForm
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = "catalog/product_form.html"
+    form_class = ProductForm
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = "catalog/product_confirm_delete.html"
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ContactTemplateView(TemplateView):
     template_name = "catalog/contacts.html"
 
     def get_context_data(self, **kwargs):
@@ -26,11 +52,3 @@ class CatalogTemplateView(TemplateView):
             context["adr_contact"] = "Адрес отсутствует"
 
         return context
-
-
-class CatalogDetailView(DetailView):
-    model = Product
-
-    # app_name/model_action - поиск шаблона по умолчанию
-    # catalog/product_detail.html
-    # Ранее мы записывали QuerySet в context, теперь он создается по умолчанию как object_action(object_detail)

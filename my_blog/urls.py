@@ -1,15 +1,9 @@
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import include, path
 
-from django.urls import path, include
-
-from my_blog.views import (
-    MyBlogListView,
-    MyBlogDetailView,
-    MyBlogCreateView,
-    MyBlogUpdateView,
-    MyBlogDeleteView,
-)
+from my_blog.views import (MyBlogCreateView, MyBlogDeleteView,
+                           MyBlogDetailView, MyBlogListView, MyBlogUpdateView)
 
 app_name = "my_blog"
 

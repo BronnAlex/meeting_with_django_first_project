@@ -1,20 +1,26 @@
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.urls import path
-from catalog.views import CatalogListView, CatalogDetailView, CatalogTemplateView
+
+from catalog.views import (ContactTemplateView, ProductCreateView,
+                           ProductDeleteView, ProductDetailView,
+                           ProductListView, ProductUpdateView)
 
 app_name = "catalog"
 
 urlpatterns = [
-    path("", CatalogListView.as_view(), name="product_list"),
-    # path("", home, name="home"),
-    # path("contacts/", contacts, name="contacts"),
-    path("contacts/", CatalogTemplateView.as_view(), name="contacts"),
-    # path("product_details/<int:pk>/", product_details, name="product_details"),
+    path("", ProductListView.as_view(), name="product_list"),
+    path("product_create/", ProductCreateView.as_view(), name="product_create"),
     path(
-        "product_detail/<int:pk>/", CatalogDetailView.as_view(), name="product_detail"
+        "product_update/<int:pk>/", ProductUpdateView.as_view(), name="product_update"
     ),
+    path(
+        "product_delete/<int:pk>/", ProductDeleteView.as_view(), name="product_delete"
+    ),
+    path(
+        "product_detail/<int:pk>/", ProductDetailView.as_view(), name="product_detail"
+    ),
+    path("contacts/", ContactTemplateView.as_view(), name="contacts"),
 ]
 
 if settings.DEBUG:
