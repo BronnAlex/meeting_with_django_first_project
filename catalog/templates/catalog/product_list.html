@@ -16,7 +16,12 @@
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary"
                                        href="{% url 'catalog:product_detail' product.pk %}"
-                                       role="button">Посмотреть</a>
+                                       role="button">Посмотреть
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-secondary"
+                                       href="{% url 'catalog:product_update' product.pk %}"
+                                       role="button">Редактировать
+                                    </a>
                                 </div>
                                 <small class="text-body-secondary">9 mins</small></div>
                         </div>
