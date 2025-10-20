@@ -3,10 +3,10 @@ from django.core.exceptions import ValidationError
 
 from .models import Product
 from .validators import (validate_image_size_5mb, validate_image_type,
-                         validate_words)
+                          validate_forbidden_words)
 
 # вызываем функцию валидации плохих слов созданную нами
-not_valid_words = validate_words()
+# not_valid_words = validate_forbidden_words()
 
 
 class ProductForm(forms.ModelForm):
@@ -34,19 +34,18 @@ class ProductForm(forms.ModelForm):
         return unit_price_product
 
     def clean_name_product(self):
+        """Валидация через функцию валидатор, которая имеет один обязательный арг"""
         name_product = self.cleaned_data["name_product"]
-        for word in not_valid_words:
-            if word.lower() in name_product.lower():
-                raise ValidationError(f"Слово {word} недопустимо в названии")
+        validate_forbidden_words(name_product, "Слово {word} недопустимо в названии")
         return name_product
 
     def clean_description_product(self):
+        """Валидация через функцию валидатор, которая имеет один обязательный арг"""
         description_product = self.cleaned_data["description_product"]
-        for word in not_valid_words:
-            if word.lower() in description_product.lower():
-                raise ValidationError(f"Слово {word} недопустимо в описании")
-
+        validate_forbidden_words(description_product, "Слово {word} недопустимо в описании")
         return description_product
+
+
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
