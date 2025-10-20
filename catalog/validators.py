@@ -31,18 +31,21 @@ def validate_image_size_5mb(image):
         )
 
 
-def validate_words():
-    """Функция валидатор на запрещенные слова"""
-    not_valid_words = [
-        "казино",
-        "криптовалюта",
-        "крипта",
-        "биржа",
-        "дешево",
-        "бесплатно",
-        "обман",
-        "полиция",
-        "радар",
-    ]
+FORBIDDEN_WORDS = {
+    "казино",
+    "криптовалюта",
+    "крипта",
+    "биржа",
+    "дешево",
+    "бесплатно",
+    "обман",
+    "полиция",
+    "радар",
+}
 
-    return not_valid_words
+def validate_forbidden_words(some_string, error_msg="Используется запрещенное слово {word}"):
+    """Функция валидатор, которая обрабатывает константу запрещенных слов
+    и возвращает отформатированную ошибку"""
+    for word in FORBIDDEN_WORDS:
+        if word in some_string.lower():
+            raise ValidationError(error_msg.format(word=word))
