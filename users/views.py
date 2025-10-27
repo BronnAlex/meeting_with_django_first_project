@@ -21,14 +21,14 @@ class UserCreateView(CreateView):
     # переопределяем метод валидации
     def form_valid(self, form):
 
-        user = form.save(form)  # сохраняем пользователя
+        # user = form.save(form)  # сохраняем пользователя, грубый метод, т.к не дает возможность нормально обрабатывать экземпляр
+        user = form.save(commit=False) # измененный вариант выше, не сразу сохраняет данные, которые в последствии можно изменять
         user.is_active = False  # doing user not active
-        token = secrets.token_hex(16)  # generate token
-        user.token = token
+        user.token = secrets.token_hex(16)  # generate token
         user.save()
         host = self.request.get_host()  # получение хоста, откуда пришел пользователь
         # Реализуем ссылку для перехода с токеном, для того, чтобы сделать пользователя активным
-        url = f"http://{host}/users/email-confirm/{token}/"  # Эты ссылка отправится пользователю, для верификации
+        url = f"http://{host}/users/email-confirm/{user.token}/"  # Эты ссылка отправится пользователю, для верификации
         # Импортированная функция для отправки сообщения
         send_mail(
             subject="Подтверждение почты",

@@ -26,8 +26,9 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
     def form_valid(self, form):
 
         product = form.save(form)  # сохраняем продукт
-        user = self.request.user
-        product.owner = user  # добавляем к полю owner пользователя(кто создал) LoginRequiredMixin позволяет добавить пользователя автоматиически
+        # user = self.request.user
+        # product.owner = user  Данный код не актуален, так как происходит два запроса к БД
+        form.instance.owner = self.request.user # одним запросом заполняются данные в БД
         product.save()
 
         return super().form_valid(form)
