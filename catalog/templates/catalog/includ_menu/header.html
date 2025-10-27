@@ -11,6 +11,15 @@
                     <li><a href="{% url 'catalog:product_list' %}" class="text-white">Главная</a></li>
                     <li><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
                     <li><a href="{% url 'my_blog:my_blog_list' %}" class="text-white">Перейти в блог</a></li>
+
+                    {% if user.is_authenticated %}
+                        <li>На сайте: {{ user.email }}</li>
+                        <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
+                        <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                    {% endif %}
+
                     <li><a href="{% url 'admin:index' %}" class="text-white">Админка</a></li>
                 </ul>
             </div>

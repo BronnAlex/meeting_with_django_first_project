@@ -9,7 +9,8 @@ urlpatterns = [
     path(
         "blogs/", include("my_blog.urls", namespace="my_blog")
     ),  # Путь к приложению my_blog
+    path("users/", include("users.urls", namespace="users")),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, documment_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

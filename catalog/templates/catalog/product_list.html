@@ -18,10 +18,12 @@
                                        href="{% url 'catalog:product_detail' product.pk %}"
                                        role="button">Посмотреть
                                     </a>
-                                    <a class="btn btn-sm btn-outline-secondary"
-                                       href="{% url 'catalog:product_update' product.pk %}"
-                                       role="button">Редактировать
-                                    </a>
+                                    {% if user.is_authenticated %}
+                                        <a class="btn btn-sm btn-outline-secondary"
+                                           href="{% url 'catalog:product_update' product.pk %}"
+                                           role="button">Редактировать
+                                        </a>
+                                    {% endif %}
                                 </div>
                                 <small class="text-body-secondary">9 mins</small></div>
                         </div>

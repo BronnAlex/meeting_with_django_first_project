@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import CustomUser
+
 
 class Category(models.Model):
     """Модель Категории"""
@@ -48,6 +50,15 @@ class Product(models.Model):
         null=True,
         blank=True,
         related_name="products",
+    )
+
+    owner = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Владелец продукта",
+        help_text="Введите владельца продукта",
     )
     unit_price_product = models.IntegerField(
         verbose_name="Цена за один товар", help_text="Цена за покупку"
