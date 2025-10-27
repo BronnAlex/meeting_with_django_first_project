@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -16,11 +17,20 @@ class ProductDetailView(DetailView):
     template_name = "catalog/product_detail.html"
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
+
+    def form_valid(self, form):
+
+        product = form.save(form)  # сохраняем продукт
+        user = self.request.user
+        product.owner = user  # добавляем к полю owner пользователя(кто создал) LoginRequiredMixin позволяет добавить пользователя автоматиически
+        product.save()
+
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):

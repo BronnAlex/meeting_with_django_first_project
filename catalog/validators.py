@@ -43,7 +43,10 @@ FORBIDDEN_WORDS = {
     "радар",
 }
 
-def validate_forbidden_words(some_string, error_msg="Используется запрещенное слово {word}"):
+
+def validate_forbidden_words(
+    some_string, error_msg="Используется запрещенное слово {word}"
+):
     """Функция валидатор, которая обрабатывает константу запрещенных слов
     и возвращает отформатированную ошибку"""
     for word in FORBIDDEN_WORDS:
