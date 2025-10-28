@@ -6,12 +6,18 @@
         <div class="col-6">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
-                    <p class="card-text"> Вы действительно хотите удалить {{ object.name_product }}</p>
-                    <div class="card-body">
-                        {% csrf_token %}
-                    </div>
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                    <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Отменить</a>
+                    {% if object and user == object.owner or perms.catalog.can_unpublish_product %}
+                        <p class="card-text"> Вы действительно хотите удалить {{ object.name_product }}</p>
+                        <div class="card-body">
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                        <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Отменить</a>
+                    {% else %}
+                        <p>У вас нет прав доступа на удалление</p>
+                        <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
+                    {% endif %}
+
                 </div>
             </form>
         </div>

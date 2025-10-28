@@ -10,13 +10,13 @@
                         {{ form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        {% if object %}
+                        {% if object and user.is_authenticated %}
                             Готово
-                        {% else %}
+                        {% elif user.is_authenticated %}
                             Создать
                         {% endif %}
                     </button>
-                        {% if object %}
+                        {% if object and user == object.owner or perms.catalog.can_unpublish_product %}
                             <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger my-2">Удалить</a>
                         {% endif %}
                     <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary my-2">Отмена</a>
@@ -25,4 +25,4 @@
         </div>
     </div>
 </div>
-{% endblock%}
+{% endblock %}

@@ -92,3 +92,9 @@ class ProductForm(forms.ModelForm):
                 "placeholder": "Укажите дату создания",  # Текст подсказки внутри поля
             }
         )
+
+
+class ProductModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['is_publicate', ]
