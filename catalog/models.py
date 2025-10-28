@@ -61,7 +61,11 @@ class Product(models.Model):
         help_text="Введите владельца продукта",
     )
 
-    is_publicate = models.BooleanField(default=False, verbose_name='Статус публикации', help_text='Укажите статус публикации')
+    is_publicate = models.BooleanField(
+        default=False,
+        verbose_name="Статус публикации",
+        help_text="Укажите статус публикации",
+    )
 
     unit_price_product = models.IntegerField(
         verbose_name="Цена за один товар", help_text="Цена за покупку"
@@ -80,7 +84,9 @@ class Product(models.Model):
         verbose_name_plural = "Продукты"
         ordering = ["name_product", "unit_price_product", "created_at", "updated_at"]
         # Кастомные права доступа
-        permissions = [('can_unpublish_product', 'Отмена публикации продукта'),]
+        permissions = [
+            ("can_unpublish_product", "Отмена публикации продукта"),
+        ]
 
 
 class Contact(models.Model):
