@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product
 
 
@@ -25,20 +26,40 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
 
-        product = form.save(form)  # сохраняем продукт
+        product = form.save(commit=False)  # отсроченное сохранение продукта
         # user = self.request.user
         # product.owner = user  Данный код не актуален, так как происходит два запроса к БД
-        form.instance.owner = self.request.user # одним запросом заполняются данные в БД
+        form.instance.owner = (
+            self.request.user
+        )  # одним запросом заполняются данные в БД
+        product.is_publicate = (
+            True  # Изменение статуса публикации при создании продукта
+        )
         product.save()
 
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
+
+    def form_valid(self, form):
+
+        return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:  # Если пользователь является собственником
+            return ProductForm
+
+        if user.has_perm(
+            "catalog.can_unpublish_product"
+        ):  # Если пользователь Имеет кастомные права
+            return ProductModeratorForm
+        raise PermissionDenied
 
 
 class ProductDeleteView(DeleteView):

@@ -22,7 +22,9 @@ class UserCreateView(CreateView):
     def form_valid(self, form):
 
         # user = form.save(form)  # сохраняем пользователя, грубый метод, т.к не дает возможность нормально обрабатывать экземпляр
-        user = form.save(commit=False) # измененный вариант выше, не сразу сохраняет данные, которые в последствии можно изменять
+        user = form.save(
+            commit=False
+        )  # измененный вариант выше, не сразу сохраняет данные, которые в последствии можно изменять
         user.is_active = False  # doing user not active
         user.token = secrets.token_hex(16)  # generate token
         user.save()

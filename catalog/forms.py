@@ -2,8 +2,11 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Product
-from .validators import (validate_forbidden_words, validate_image_size_5mb,
-                         validate_image_type)
+from .validators import (
+    validate_forbidden_words,
+    validate_image_size_5mb,
+    validate_image_type,
+)
 
 # вызываем функцию валидации плохих слов созданную нами
 # not_valid_words = validate_forbidden_words()
@@ -92,3 +95,11 @@ class ProductForm(forms.ModelForm):
                 "placeholder": "Укажите дату создания",  # Текст подсказки внутри поля
             }
         )
+
+
+class ProductModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            "is_publicate",
+        ]

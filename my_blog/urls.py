@@ -2,8 +2,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from my_blog.views import (MyBlogCreateView, MyBlogDeleteView,
-                           MyBlogDetailView, MyBlogListView, MyBlogUpdateView)
+from my_blog.views import (
+    MyBlogCreateView,
+    MyBlogDeleteView,
+    MyBlogDetailView,
+    MyBlogListView,
+    MyBlogUpdateView,
+)
 
 app_name = "my_blog"
 
