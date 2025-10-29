@@ -20,6 +20,7 @@ class UserCreateView(CreateView):
 
     # переопределяем метод валидации
     def form_valid(self, form):
+        """Метод валидации пользователя при регистрации"""
 
         # user = form.save(form)  # сохраняем пользователя, грубый метод, т.к не дает возможность нормально обрабатывать экземпляр
         user = form.save(
@@ -45,6 +46,7 @@ class UserCreateView(CreateView):
 
 
 def email_verification(request, token):
+    """Функциональное представление при верификации почты и перевод пользователя на страницу входа"""
     user = get_object_or_404(CustomUser, token=token)
     user.is_active = True
     user.save()
