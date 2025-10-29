@@ -1,10 +1,12 @@
 from django.contrib import admin
 
-from .models import Category, Contact, Product
+from catalog.models import Category, Contact, Product
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    """Класс регистрации модели продуктов в админке"""
+
     list_display = (
         "id",
         "name_product",
@@ -19,6 +21,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    """Класс регистрации модели категории продуктов в админке"""
+
     list_display = (
         "id",
         "name_category",
@@ -27,6 +31,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
+    """Класс регистрации модели контактов компании в админке"""
+
     list_display = (
         "name_country",
         "inn_company",

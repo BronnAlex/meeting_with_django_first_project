@@ -8,6 +8,8 @@ from users.models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
+    """Класс регистрации кастомного пользователя в админке"""
+
     list_display = (
         "id",
         "email",

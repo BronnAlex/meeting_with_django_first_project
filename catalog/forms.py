@@ -13,6 +13,8 @@ from .validators import (
 
 
 class ProductForm(forms.ModelForm):
+    """Класс формы для модели продуктов используемая в классах представления"""
+
     class Meta:
         model = Product
         fields = [
@@ -31,6 +33,7 @@ class ProductForm(forms.ModelForm):
     )
 
     def clean_unit_price_product(self):
+        """Метод валидации цены товара"""
         unit_price_product = self.cleaned_data["unit_price_product"]
         if unit_price_product <= 0:
             raise ValidationError("Цена не может быть отрицательной или равной нулю")
@@ -51,6 +54,7 @@ class ProductForm(forms.ModelForm):
         return description_product
 
     def __init__(self, *args, **kwargs):
+        """Метод стилизации формы"""
         super(ProductForm, self).__init__(*args, **kwargs)
 
         # Настройка атрибутов виджета для поля 'first_name'
@@ -98,6 +102,8 @@ class ProductForm(forms.ModelForm):
 
 
 class ProductModeratorForm(forms.ModelForm):
+    """Форма для модератора"""
+
     class Meta:
         model = Product
         fields = [

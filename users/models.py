@@ -5,6 +5,8 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    """Модель пользователя"""
+
     username = None
     email = models.EmailField(
         unique=True, verbose_name="Email", help_text="Введите ваш email"
