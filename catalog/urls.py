@@ -2,8 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-
 from catalog.views import (
+    CategoryAndProductsListView,
     ContactTemplateView,
     ProductCreateView,
     ProductDeleteView,
@@ -27,6 +27,11 @@ urlpatterns = [
         "product_detail/<int:pk>/", ProductDetailView.as_view(), name="product_detail"
     ),
     path("contacts/", ContactTemplateView.as_view(), name="contacts"),
+    path(
+        "category_and_products/",
+        CategoryAndProductsListView.as_view(),
+        name="category_and_products",
+    ),
 ]
 
 if settings.DEBUG:

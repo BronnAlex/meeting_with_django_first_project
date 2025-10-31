@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    {% for category, products in product_list.items %}
+                        <p class="card-text bm-5 px-2">Категория: {{ category.name_category }}</p>
+                        {% if products %}
+                            {% for product in products %}
+                                <p class="card-text bm-5 px-2"> Продукт: {{ product.name_product }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p class="card-text bm-5 px-2"> Нет продуктов данной категории </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
