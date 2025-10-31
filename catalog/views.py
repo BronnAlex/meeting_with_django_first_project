@@ -8,9 +8,9 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product
-from catalog.services import products_from_cache
+from catalog.services import products_from_cache, ProductService
 
-@method_decorator(cache_page(60*15), name="dispatch")
+# @method_decorator(cache_page(60*15), name="dispatch")
 class ProductListView(ListView):
     """Класс представления списка продуктов в шаблоне"""
 
@@ -22,12 +22,19 @@ class ProductListView(ListView):
         return products_from_cache()
 
 
-@method_decorator(cache_page(60*15), name="dispatch")
+# @method_decorator(cache_page(60*15), name="dispatch")
 class ProductDetailView(DetailView):
     """Класс детального представления продукта в шаблоне"""
 
     model = Product
     template_name = "catalog/product_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_product = self.object.category_product # получение id текущего объекта
+        context['product_list'] = ProductService.service_category_product(category_product)
+
+        return context
 
 
 
