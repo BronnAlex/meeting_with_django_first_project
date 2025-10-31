@@ -1,3 +1,5 @@
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
@@ -6,20 +8,28 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product
+from catalog.services import products_from_cache
 
-
+@method_decorator(cache_page(60*15), name="dispatch")
 class ProductListView(ListView):
     """Класс представления списка продуктов в шаблоне"""
 
     model = Product
     template_name = "catalog/product_list.html"
 
+    def get_queryset(self):
+        """Метод получения данных(queryset)"""
+        return products_from_cache()
 
+
+@method_decorator(cache_page(60*15), name="dispatch")
 class ProductDetailView(DetailView):
     """Класс детального представления продукта в шаблоне"""
 
     model = Product
     template_name = "catalog/product_detail.html"
+
+
 
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
