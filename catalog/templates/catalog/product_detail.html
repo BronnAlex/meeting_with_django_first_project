@@ -15,7 +15,7 @@
                             <p class="card-text">Категория товара: {{ object.category_product | default:'Нужный товар'}}</p>
                             <p class="card-text">Дата создания: {{ object.created_at | date:"d M Y"}}</p>
                             <p class="card-text">Цена товара: {{ object.unit_price_product }}</p>
-                            <p class="card-text">Мой Список: {{ product_list }}</p>
+
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary"

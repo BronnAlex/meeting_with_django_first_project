@@ -1,18 +1,20 @@
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Contact, Product
-from catalog.services import products_from_cache, ProductService
+from catalog.services import ProductService, products_from_cache
 
-# @method_decorator(cache_page(60*15), name="dispatch")
+
+@method_decorator(cache_page(60*2), name="dispatch")
 class ProductListView(ListView):
-    """Класс представления списка продуктов в шаблоне"""
+    """Класс представления списка продуктов в шаблоне
+    обернутый в декоратор кэштрования 2 мин"""
 
     model = Product
     template_name = "catalog/product_list.html"
@@ -22,21 +24,13 @@ class ProductListView(ListView):
         return products_from_cache()
 
 
-# @method_decorator(cache_page(60*15), name="dispatch")
+@method_decorator(cache_page(60*2), name="dispatch")
 class ProductDetailView(DetailView):
-    """Класс детального представления продукта в шаблоне"""
+    """Класс детального представления продукта в шаблоне
+    обернутый в декоратор кэширования 2 мин"""
 
     model = Product
     template_name = "catalog/product_detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category_product = self.object.category_product # получение id текущего объекта
-        context['product_list'] = ProductService.service_category_product(category_product)
-
-        return context
-
-
 
 
 class ProductCreateView(CreateView, LoginRequiredMixin):
@@ -123,4 +117,16 @@ class ContactTemplateView(TemplateView):
             context["description"] = "Информация о компании отсутствует."
             context["adr_contact"] = "Адрес отсутствует"
 
+        return context
+
+
+class CategoryAndProductsListView(ListView):
+    """Контроллер обработки шаблона для вывода информации о категориях и их продуктах"""
+
+    model = Product
+    template_name = "catalog/category_and_prod_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["product_list"] = ProductService.get_products_in_category()
         return context
